@@ -1,11 +1,11 @@
 # Cutty Sark
 Cutty Sark is a ~~clipper ship~~Discord bot to create message clips which can be used over and over.
 
-## License Notice
+## License
 Copyright 2020 The Cutty Sark Authors
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
+you may not use this project except in compliance with the License.
 You may obtain a copy of the License at
 
 <http://www.apache.org/licenses/LICENSE-2.0>
