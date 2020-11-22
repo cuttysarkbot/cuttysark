@@ -1,0 +1,8 @@
+{
+  "name": "cuttysark",
+  "version": "2.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/cuttysarkbot/cuttysark",
+  "license": "Apache-2.0",
+  "private": true
+}

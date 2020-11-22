@@ -1,0 +1,10 @@
+{
+	"name": "cutty sark",
+    "gameText": "for clips",
+    "gameType": "LISTENING",
+	"defaultPrefix": [";"],
+	"tokenEnvVarName": "CUTTYSARK_DISCORD_TOKEN",
+	"encKeyEnvVarName": "CUTTYSARK_STORAGE_ENV_KEY",
+	"signKeyEnvVarName": "CUTTYSARK_STORAGE_SIGN_KEY",
+	"mongoUri": "CUTTYSARK_STORAGE_MONGO_URI"
+}
