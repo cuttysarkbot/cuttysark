@@ -1,0 +1,13 @@
+{
+    "name": "cutty sark",
+    "activity": {
+        "name": "for clips",
+        "type": "LISTENING"
+    },
+    "defaultPrefix": [";"],
+    "tokenEnvVarName": "CUTTYSARK_DISCORD_TOKEN",
+    "encKeyEnvVarName": "CUTTYSARK_STORAGE_ENC_KEY",
+    "signKeyEnvVarName": "CUTTYSARK_STORAGE_SIGN_KEY",
+    "mongoUri": "CUTTYSARK_STORAGE_MONGO_URI",
+    "readDotEnv": true
+}
