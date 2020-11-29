@@ -4,6 +4,6 @@ import configJSON from './config.json';
 
 // Not caught to throw if config is invalid
 const configUnknown: unknown = configJSON;
-const configObj = configUnknown as Config;
+const configObject = configUnknown as Config;
 
-export default configObj;
+export default configObject;

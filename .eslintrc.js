@@ -1,17 +1,17 @@
 module.exports = {
-    'env': {
-        'commonjs': true,
-        'es6': true,
-        'node': true,
+    env: {
+        commonjs: true,
+        es6: true,
+        node: true,
     },
-    'plugins': [
+    plugins: [
         'sonarjs',
         'promise',
         'unicorn',
         '@typescript-eslint',
         'prettier',
     ],
-    'extends': [
+    extends: [
         'airbnb-typescript/base',
         'plugin:@typescript-eslint/recommended',
         'plugin:promise/recommended',
@@ -23,20 +23,20 @@ module.exports = {
         'prettier/@typescript-eslint',
         'plugin:prettier/recommended',
     ],
-    'parser': '@typescript-eslint/parser',
-    'parserOptions': {
-        'project': './tsconfig.json',
-        'ecmaVersion': 2020,
+    exclude: ['node_modules/**/*'],
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        project: './tsconfig.json',
+        ecmaVersion: 2020,
     },
-    'globals': {
-        'Atomics': 'readonly',
-        'SharedArrayBuffer': 'readonly',
+    globals: {
+        Atomics: 'readonly',
+        SharedArrayBuffer: 'readonly',
     },
-    'rules': {
+    rules: {
         'no-console': 0,
         'no-continue': 0,
-        'no-underscore-dangle': ['error', { 'allow': ['_id'] }],
+        'no-underscore-dangle': 0,
         'no-param-reassign': 0,
-        'unicorn/prevent-abbreviations': 'off',
     },
 };

@@ -33,6 +33,24 @@ CUTTYSARK_STORAGE_SIGN_KEY=ijodfjNWG@984n2ui308HUD42iofn2398340=@489jN8942h49nfu
 CUTTYSARK_STORAGE_MONGO_URI=mongodb://myDBReader:D1fficultP%40ssw0rd@mongodb0.example.com:27017
 ```
 
+### Storage and Keys
+
+Cutty Sark uses MongoDB as its database provider, so you'll need an instance of that to run the bot. If running the bot in a development environment, you can just install the [MongoDB community server](https://www.mongodb.com/try/download/community) onto your computer and use the URL `mongodb://localhost:27017` to access it.
+
+Cutty Sark stores data encrypted and signed at rest, so you'll need to generate some keys to run the bot. If you have OpenSSL installed, you can just run this command to generate the 32-bit encryption key:
+
+```sh
+openssl rand -base64 32
+```
+
+and this command to generate the 64-bit signing key:
+
+```sh
+openssl rand -base64 64
+```
+
+> _Note: If you're on Windows, you probably won't have OpenSSL installed, but you can open Git Bash and run the commands in there._
+
 ## License
 
 Copyright 2020 The Cutty Sark Authors

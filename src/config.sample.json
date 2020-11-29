@@ -9,5 +9,6 @@
     "encKeyEnvVarName": "CUTTYSARK_STORAGE_ENC_KEY",
     "signKeyEnvVarName": "CUTTYSARK_STORAGE_SIGN_KEY",
     "mongoUri": "CUTTYSARK_STORAGE_MONGO_URI",
-    "readDotEnv": true
+    "readDotEnv": true,
+    "debugMode": true
 }

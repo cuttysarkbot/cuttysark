@@ -17,6 +17,7 @@ interface Config {
     signKeyEnvVar: string;
     mongoUriEnvVar: string;
     readDotEnv: string;
+    debugMode: boolean;
 }
 
 export default Config;
