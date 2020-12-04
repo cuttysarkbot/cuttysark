@@ -16,7 +16,7 @@ export function genericLogger(
             logType = chalk.blue('DEBUG');
             break;
     }
-    console.log(`${logType} - ${ns}: ${messages.join(' ')}`);
+    console.log(`${logType} - ${chalk.green(ns)}: ${messages.join(' ')}`);
 }
 
 export function debug(ns: string, ...messages: string[]): void {
@@ -26,5 +26,20 @@ export function debug(ns: string, ...messages: string[]): void {
 }
 
 export function error(ns: string, ...messages: string[]): void {
+    // TODO: log errors to discord channel
     genericLogger(1, ns, ...messages);
+}
+
+export function getCommandNameAndArgs(
+    messageText: string,
+    prefix: string,
+): string[] {
+    const prefixless = messageText.substring(prefix.length);
+    let firstSpaceIndex = prefixless.indexOf(' ');
+    if (firstSpaceIndex === -1) {
+        firstSpaceIndex = prefixless.length;
+    }
+    const args = prefixless.substring(firstSpaceIndex);
+
+    return [prefixless.substring(0, firstSpaceIndex), args];
 }

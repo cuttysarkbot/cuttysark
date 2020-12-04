@@ -63,7 +63,7 @@ export default class StorageConnector {
         encKey: string,
         signKey: string,
     ): Promise<void> {
-        debug('Storage', 'Initializing storage connector');
+        debug('Storage', 'Initializing storage connector...');
         // Connect and log errors
         await this.m.connect(mongoUrl, {
             useNewUrlParser: true,
@@ -198,7 +198,7 @@ export default class StorageConnector {
         return newSettings;
     }
 
-    async getClipAttachment(attachmentId: string): Promise<Buffer> {
+    async getClipAttachment(attachmentId: string): Promise<Buffer | null> {
         debug('Storage', 'Querying clip attachment...');
         const attachmentDoc = await this.ClipAttachmentModel.findById(
             attachmentId,
@@ -207,14 +207,14 @@ export default class StorageConnector {
         if (attachmentDoc) {
             return attachmentDoc.get('data');
         } else {
-            throw new Error('Attachment not found');
+            return null;
         }
     }
 
     async getClip(
         namespaceId: string,
         clipToken: string,
-    ): Promise<ClipManifest> {
+    ): Promise<ClipManifest | null> {
         debug('Storage', 'Querying clip manifest...');
         // Generate clip id
         const clipId = generateClipId(namespaceId, clipToken);
@@ -230,7 +230,7 @@ export default class StorageConnector {
                 attachments: clipDoc.get('attachments'),
             };
         } else {
-            throw new Error('Clip not found');
+            return null;
         }
     }
 

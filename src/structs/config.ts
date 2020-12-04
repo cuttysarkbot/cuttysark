@@ -11,7 +11,8 @@ interface Config {
         name: string;
         type: DiscordActivityType;
     };
-    defaultPrefix: string[];
+    defaultGuildPrefix: string;
+    defaultPersonalPrefix: string;
     tokenEnvVar: string;
     encKeyEnvVar: string;
     signKeyEnvVar: string;

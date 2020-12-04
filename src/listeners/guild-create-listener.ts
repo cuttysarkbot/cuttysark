@@ -8,5 +8,12 @@ export default async function GuildCreateListener(
     guild: Discord.Guild,
 ): Promise<void> {
     debug('GuildCreate', 'Guild added');
-    await storage.createNamespaceSettings(`guild${guild.id}`);
+    try {
+        await storage.createNamespaceSettings(`guild${guild.id}`);
+    } catch (error) {
+        error(
+            'GuildCreateListener',
+            `Error creating namespace settings: ${error}`,
+        );
+    }
 }
