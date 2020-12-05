@@ -4,6 +4,7 @@ import config from '../load-config';
 import { debug, getCommandNameAndArgs } from '../utils/generic-utils';
 import StorageConnector from '../storage/storage-connector';
 import { getPersonalCommand, getGuildCommand } from '../command-manager';
+import { sendMessage, sendError } from '../utils/message-utils';
 import Command from '../structs/command';
 import CommandOptions from '../structs/command-options';
 import ClipManifest from '../structs/clip-manifest';
@@ -25,7 +26,10 @@ export default async function MessageListener(
             ? await storage.getNamespaceSettings(`guild${message.guild?.id}`)
             : null;
 
-        // TODO: Warn user if personal and guild prefix are the same
+        const personalPrefix =
+            personalSettings.customPrefix || config.defaultPersonalPrefix;
+        const guildPrefix =
+            guildSettings?.customPrefix || config.defaultGuildPrefix;
 
         // Pinging bot will display prefix
         if (
@@ -33,13 +37,17 @@ export default async function MessageListener(
             messageText === `<@!${message.client.user?.id}>`
         ) {
             debug('MessageListener', `Prefix requested`);
-            // TODO: print prefix to chat on ping
-        }
+            sendMessage(
+                `hi, i'm ${config.name}
 
-        const personalPrefix =
-            personalSettings.customPrefix || config.defaultPersonalPrefix;
-        const guildPrefix =
-            guildSettings?.customPrefix || config.defaultGuildPrefix;
+your personal prefix: \`${personalPrefix}\`
+${guildAvailable ? `this server's prefix: \`${guildPrefix}\`` : ''}
+
+use the \`help\` command for more information`,
+                message.channel,
+            );
+            return;
+        }
 
         const commandOptions: CommandOptions = {
             runType: 'personal',
@@ -82,9 +90,21 @@ export default async function MessageListener(
                     command.name,
                     'will be run',
                 );
+
+                if (personalPrefix === guildPrefix && guildAvailable) {
+                    sendMessage(
+                        `please note: your personal prefix is the same as this server's prefix, so the personal version of this command will be run
+you will need to change your personal prefix to use the server command`,
+                        message.channel,
+                    );
+                }
+
                 await command.run(message, storage, args, commandOptions);
             } catch (error) {
-                // TODO: tell user that an unknown error occurred
+                sendError(
+                    'an unknown error occurred while running this command',
+                    message.channel,
+                );
                 error(
                     'MessageListener',
                     `Uncaught error when running ${command.name}: ${error}`,
@@ -174,7 +194,10 @@ export default async function MessageListener(
                     await message.delete();
                 }
             } catch (error) {
-                // TODO: notify user
+                sendError(
+                    'an error occured while fetching this clip',
+                    message.channel,
+                );
                 error('Message Listener', 'Error fetching clip:', error);
             }
         }
