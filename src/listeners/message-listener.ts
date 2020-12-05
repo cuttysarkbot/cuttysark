@@ -40,8 +40,11 @@ export default async function MessageListener(
             sendMessage(
                 `hi, i'm ${config.name}
 
-your personal prefix: \`${personalPrefix}\`
-${guildAvailable ? `this server's prefix: \`${guildPrefix}\`` : ''}
+your personal prefix: \`${personalPrefix}\`${
+                    guildAvailable
+                        ? `\nthis server's prefix: \`${guildPrefix}\``
+                        : ''
+                }
 
 use the \`help\` command for more information`,
                 message.channel,
@@ -54,11 +57,11 @@ use the \`help\` command for more information`,
         };
 
         let command: Command | null = null;
-        let args: string = '';
+        let prefixAndTrigger: string = '';
 
         if (messageText.startsWith(personalPrefix)) {
             debug('MessageListener', 'Personal prefixed message received');
-            const [commandName, possibleArgs] = getCommandNameAndArgs(
+            const [commandName, possible] = getCommandNameAndArgs(
                 messageText,
                 personalPrefix,
             );
@@ -66,11 +69,11 @@ use the \`help\` command for more information`,
 
             if (command) {
                 commandOptions.runType = 'personal';
-                args = possibleArgs;
+                prefixAndTrigger = possible;
             }
         } else if (guildAvailable && messageText.startsWith(guildPrefix)) {
             debug('MessageListener', 'Guild prefixed message received');
-            const [commandName, possibleArgs] = getCommandNameAndArgs(
+            const [commandName, possible] = getCommandNameAndArgs(
                 messageText,
                 guildPrefix,
             );
@@ -78,7 +81,7 @@ use the \`help\` command for more information`,
 
             if (command) {
                 commandOptions.runType = 'guild';
-                args = possibleArgs;
+                prefixAndTrigger = possible;
             }
         }
 
@@ -98,6 +101,10 @@ you will need to change your personal prefix to use the server command`,
                         message.channel,
                     );
                 }
+
+                const args = message.content.substring(
+                    prefixAndTrigger.length + 1,
+                );
 
                 await command.run(message, storage, args, commandOptions);
             } catch (error) {
@@ -181,7 +188,7 @@ you will need to change your personal prefix to use the server command`,
                 };
 
                 // Send clip
-                await message.channel.send(messageObj);
+                await sendMessage(messageObj, message.channel);
 
                 // Possibly delete clip request
                 let shouldDelete = false;

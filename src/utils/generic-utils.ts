@@ -39,7 +39,7 @@ export function getCommandNameAndArgs(
     if (firstSpaceIndex === -1) {
         firstSpaceIndex = prefixless.length;
     }
-    const args = prefixless.substring(firstSpaceIndex);
+    const prefixAndTrigger = messageText.substring(0, firstSpaceIndex + 1);
 
-    return [prefixless.substring(0, firstSpaceIndex), args];
+    return [prefixless.substring(0, firstSpaceIndex), prefixAndTrigger];
 }
