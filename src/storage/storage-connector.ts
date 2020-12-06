@@ -259,4 +259,17 @@ export default class StorageConnector {
         });
         clipDoc.save();
     }
+
+    async removeClip(namespaceId: string, clipToken: string): Promise<void> {
+        debug('Storage', 'Deleting clip manifest...');
+
+        const clipId = generateClipId(namespaceId, clipToken);
+        await this.ClipManifestModel.deleteOne({ _id: clipId });
+    }
+
+    async removeAttachment(attachmentId: string): Promise<void> {
+        debug('Storage', 'Deleting clip attachment...');
+
+        await this.ClipAttachmentModel.deleteOne({ _id: attachmentId });
+    }
 }

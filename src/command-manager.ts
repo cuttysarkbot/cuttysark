@@ -1,8 +1,9 @@
 import Command from './structs/command';
 
 import Create from './commands/create';
+import Remove from './commands/remove';
 
-const commandList: Command[] = [Create];
+const commandList: Command[] = [Create, Remove];
 const commandMap: Record<string, Command> = {};
 const personalCommandMap: Record<string, Command> = {};
 const guildCommandMap: Record<string, Command> = {};
