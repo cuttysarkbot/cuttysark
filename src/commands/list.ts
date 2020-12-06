@@ -1,11 +1,7 @@
 import Command from '../structs/command';
 
 import { debug } from '../utils/generic-utils';
-import {
-    sendMessage,
-    sendError,
-    sendUserPermError,
-} from '../utils/message-utils';
+import { sendMessage, sendError } from '../utils/message-utils';
 
 const List: Command = {
     name: 'list',
