@@ -37,7 +37,7 @@ export default async function MessageListener(
             messageText === `<@!${message.client.user?.id}>`
         ) {
             debug('MessageListener', `Prefix requested`);
-            sendMessage(
+            await sendMessage(
                 `hi, i'm ${config.name}
 
 your personal prefix: \`${personalPrefix}\`${
@@ -52,12 +52,9 @@ use the \`help\` command for more information`,
             return;
         }
 
-        const commandOptions: CommandOptions = {
-            runType: 'personal',
-        };
+        const partialCommandOptions: Partial<CommandOptions> = {};
 
         let command: Command | null = null;
-        let prefixAndTrigger: string = '';
 
         if (messageText.startsWith(personalPrefix)) {
             debug('MessageListener', 'Personal prefixed message received');
@@ -68,10 +65,15 @@ use the \`help\` command for more information`,
             command = getPersonalCommand(commandName);
 
             if (command) {
-                commandOptions.runType = 'personal';
-                prefixAndTrigger = possible;
+                partialCommandOptions.runType = 'personal';
+                partialCommandOptions.prefixAndTrigger = possible;
+                partialCommandOptions.namespaceSettings = personalSettings;
             }
-        } else if (guildAvailable && messageText.startsWith(guildPrefix)) {
+        } else if (
+            guildAvailable &&
+            guildSettings &&
+            messageText.startsWith(guildPrefix)
+        ) {
             debug('MessageListener', 'Guild prefixed message received');
             const [commandName, possible] = getCommandNameAndArgs(
                 messageText,
@@ -80,8 +82,9 @@ use the \`help\` command for more information`,
             command = getGuildCommand(commandName);
 
             if (command) {
-                commandOptions.runType = 'guild';
-                prefixAndTrigger = possible;
+                partialCommandOptions.runType = 'guild';
+                partialCommandOptions.prefixAndTrigger = possible;
+                partialCommandOptions.namespaceSettings = guildSettings;
             }
         }
 
@@ -95,20 +98,22 @@ use the \`help\` command for more information`,
                 );
 
                 if (personalPrefix === guildPrefix && guildAvailable) {
-                    sendMessage(
+                    await sendMessage(
                         `please note: your personal prefix is the same as this server's prefix, so the personal version of this command will be run
 you will need to change your personal prefix to use the server command`,
                         message.channel,
                     );
                 }
 
+                const commandOptions = partialCommandOptions as CommandOptions;
+
                 const args = message.content.substring(
-                    prefixAndTrigger.length + 1,
+                    commandOptions.prefixAndTrigger.length + 1,
                 );
 
                 await command.run(message, storage, args, commandOptions);
             } catch (error) {
-                sendError(
+                await sendError(
                     'an unknown error occurred while running this command',
                     message.channel,
                 );
@@ -201,7 +206,7 @@ you will need to change your personal prefix to use the server command`,
                     await message.delete();
                 }
             } catch (error) {
-                sendError(
+                await sendError(
                     'an error occured while fetching this clip',
                     message.channel,
                 );
