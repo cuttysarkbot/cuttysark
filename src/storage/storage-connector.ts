@@ -272,4 +272,21 @@ export default class StorageConnector {
 
         await this.ClipAttachmentModel.deleteOne({ _id: attachmentId });
     }
+
+    async listNamespaceClips(namespaceId: string): Promise<ClipManifest[]> {
+        debug('Storage', 'Listing clips in namespace...');
+
+        const results = await this.ClipManifestModel.find({ namespaceId });
+
+        return results.map((clipDoc) => {
+            return {
+                _id: clipDoc.id,
+                namespaceId: clipDoc.get('namespaceId'),
+                owner: clipDoc.get('owner'),
+                token: clipDoc.get('token'),
+                content: clipDoc.get('content'),
+                attachments: clipDoc.get('attachments'),
+            };
+        });
+    }
 }

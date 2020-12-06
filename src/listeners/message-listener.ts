@@ -14,6 +14,11 @@ export default async function MessageListener(
     message: Discord.Message,
 ): Promise<void> {
     try {
+        // Bots can't do things
+        if (message.author.bot) {
+            return;
+        }
+
         // Get raw message
         const messageText = message.content.trim().toLowerCase();
 
