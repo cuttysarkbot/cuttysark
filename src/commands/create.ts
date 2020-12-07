@@ -77,11 +77,9 @@ const Create: Command = {
                 return;
             }
 
-            const attachments: string[] = [];
-
             try {
-                debug('Create', 'Downloading attachments...');
-                await Promise.all(
+                debug('Create', 'Getting attachments...');
+                const attachments: string[] = await Promise.all(
                     collMsg.attachments.map(async (attachment) => {
                         // Check if attachment is too large
                         if (attachment.size > MAX_ATTACHMENT_SIZE) {
@@ -92,13 +90,7 @@ const Create: Command = {
                             throw new Error('Attachment too large');
                         }
 
-                        const response = await fetch(attachment.url);
-
-                        attachments.push(
-                            await storage.saveAttachment(
-                                await response.buffer(),
-                            ),
-                        );
+                        return attachment.url;
                     }),
                 );
 

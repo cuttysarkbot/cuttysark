@@ -25,10 +25,7 @@ export default (encKey: string, signKey: string): Schema => {
             type: String,
         },
         // clip content (encrypted)
-        content: {
-            required: true,
-            type: String,
-        },
+        content: String,
         // list of clip attachment ids (encrypted)
         attachments: {
             required: true,

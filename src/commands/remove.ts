@@ -51,11 +51,6 @@ const Remove: Command = {
                 options.namespaceSettings.namespaceId,
                 clipToken,
             );
-            await Promise.all(
-                clipManifest.attachments.map(async (attachment) =>
-                    storage.removeAttachment(attachment),
-                ),
-            );
 
             await sendMessage('clip deleted', message.channel);
         } catch (error) {

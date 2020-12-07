@@ -57,11 +57,6 @@ const Clear: Command = {
                         options.namespaceSettings.namespaceId,
                         clip.token,
                     );
-                    await Promise.all(
-                        clip.attachments.map(async (attachment) =>
-                            storage.removeAttachment(attachment),
-                        ),
-                    );
                 }),
             );
             sendMessage('clips cleared!', message.channel);

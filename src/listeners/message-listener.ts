@@ -1,7 +1,7 @@
 import Discord from 'discord.js';
 
 import config from '../load-config';
-import { debug, getCommandNameAndArgs } from '../utils/generic-utils';
+import { debug, error, getCommandNameAndArgs } from '../utils/generic-utils';
 import StorageConnector from '../storage/storage-connector';
 import { getPersonalCommand, getGuildCommand } from '../command-manager';
 import { sendMessage, sendError } from '../utils/message-utils';
@@ -117,14 +117,14 @@ you will need to change your personal prefix to use the server command`,
                 );
 
                 await command.run(message, storage, args, commandOptions);
-            } catch (error) {
+            } catch (err) {
                 await sendError(
                     'an unknown error occurred while running this command',
                     message.channel,
                 );
                 error(
                     'MessageListener',
-                    `Uncaught error when running ${command.name}: ${error}`,
+                    `Uncaught error when running ${command.name}: ${err}`,
                 );
             }
             return;
@@ -182,19 +182,10 @@ you will need to change your personal prefix to use the server command`,
         if (clipManifest) {
             try {
                 debug('MessageListener', 'Clip found');
-                const clipAttachments: Buffer[] = await Promise.all(
-                    clipManifest.attachments.map(async (id) => {
-                        const attachment = await storage.getClipAttachment(id);
-                        if (attachment) {
-                            return attachment;
-                        }
-                        throw new Error('Error fetching clip attachments');
-                    }),
-                );
 
                 const messageObj = {
                     content: clipManifest.content,
-                    files: clipAttachments,
+                    files: clipManifest.attachments,
                 };
 
                 // Send clip
@@ -210,15 +201,15 @@ you will need to change your personal prefix to use the server command`,
                 if (shouldDelete) {
                     await message.delete();
                 }
-            } catch (error) {
+            } catch (err) {
                 await sendError(
                     'an error occured while fetching this clip',
                     message.channel,
                 );
-                error('Message Listener', 'Error fetching clip:', error);
+                error('Message Listener', 'Error fetching clip:', err);
             }
         }
-    } catch (error) {
-        error('Message Listener', 'Unknown error occurred:', error);
+    } catch (err) {
+        error('Message Listener', 'Unknown error occurred:', err);
     }
 }

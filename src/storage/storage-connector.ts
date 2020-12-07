@@ -1,11 +1,10 @@
 import mongoose from 'mongoose';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 import { debug, error } from '../utils/generic-utils';
 import { generateClipId } from '../utils/storage-utils';
 
 import ClipManifestSchema from './clip-manifest-schema';
-import ClipAttachmentSchema from './clip-attachment-schema';
 import NamespaceSettingsSchema from './namespace-settings-schema';
 
 import ClipManifest from '../structs/clip-manifest';
@@ -16,7 +15,6 @@ export default class StorageConnector {
     m: mongoose.Mongoose;
     _db: mongoose.Connection | undefined;
     _clipManifest: mongoose.Model<mongoose.Document> | undefined;
-    _clipAttachment: mongoose.Model<mongoose.Document> | undefined;
     _namespaceSettings: mongoose.Model<mongoose.Document> | undefined;
     _settingsObjs: Record<string, NamespaceSettings> | undefined;
 
@@ -32,6 +30,7 @@ export default class StorageConnector {
         }
         return this._db;
     }
+
     get ClipManifestModel(): mongoose.Model<mongoose.Document> {
         if (!this._clipManifest) {
             throw new Error(
@@ -39,14 +38,6 @@ export default class StorageConnector {
             );
         }
         return this._clipManifest;
-    }
-    get ClipAttachmentModel(): mongoose.Model<mongoose.Document> {
-        if (!this._clipAttachment) {
-            throw new Error(
-                'StorageConnector must be initialized before usage',
-            );
-        }
-        return this._clipAttachment;
     }
 
     get NamespaceSettingsModel(): mongoose.Model<mongoose.Document> {
@@ -77,10 +68,6 @@ export default class StorageConnector {
         this._clipManifest = this.m.model(
             'ClipManifest',
             ClipManifestSchema(encKey, signKey),
-        );
-        this._clipAttachment = this.m.model(
-            'ClipAttachment',
-            ClipAttachmentSchema(encKey, signKey),
         );
         this._namespaceSettings = this.m.model(
             'NamespaceSettings',
@@ -198,19 +185,6 @@ export default class StorageConnector {
         return newSettings;
     }
 
-    async getClipAttachment(attachmentId: string): Promise<Buffer | null> {
-        debug('Storage', 'Querying clip attachment...');
-        const attachmentDoc = await this.ClipAttachmentModel.findById(
-            attachmentId,
-        );
-
-        if (attachmentDoc) {
-            return attachmentDoc.get('data');
-        } else {
-            return null;
-        }
-    }
-
     async getClip(
         namespaceId: string,
         clipToken: string,
@@ -226,24 +200,12 @@ export default class StorageConnector {
                 namespaceId: clipDoc.get('namespaceId'),
                 owner: clipDoc.get('owner'),
                 token: clipDoc.get('token'),
-                content: clipDoc.get('content'),
+                content: clipDoc.get('content') || '',
                 attachments: clipDoc.get('attachments'),
             };
         } else {
             return null;
         }
-    }
-
-    async saveAttachment(dataBuffer: Buffer): Promise<string> {
-        debug('Storage', 'Saving attachment...');
-        const attachmentId = uuid.v4();
-        const attachmentDoc = new this.ClipAttachmentModel({
-            _id: attachmentId,
-            data: dataBuffer,
-        });
-        attachmentDoc.save();
-
-        return attachmentId;
     }
 
     async saveClipManifest(clipManifest: ClipManifest): Promise<void> {
@@ -257,7 +219,8 @@ export default class StorageConnector {
             ...clipManifest,
             _id: clipId,
         });
-        clipDoc.save();
+        await clipDoc.save();
+        debug('Storage', 'Saved clip manifest!');
     }
 
     async removeClip(namespaceId: string, clipToken: string): Promise<void> {
@@ -265,12 +228,6 @@ export default class StorageConnector {
 
         const clipId = generateClipId(namespaceId, clipToken);
         await this.ClipManifestModel.deleteOne({ _id: clipId });
-    }
-
-    async removeAttachment(attachmentId: string): Promise<void> {
-        debug('Storage', 'Deleting clip attachment...');
-
-        await this.ClipAttachmentModel.deleteOne({ _id: attachmentId });
     }
 
     async listNamespaceClips(namespaceId: string): Promise<ClipManifest[]> {
@@ -284,7 +241,7 @@ export default class StorageConnector {
                 namespaceId: clipDoc.get('namespaceId'),
                 owner: clipDoc.get('owner'),
                 token: clipDoc.get('token'),
-                content: clipDoc.get('content'),
+                content: clipDoc.get('content') || '',
                 attachments: clipDoc.get('attachments'),
             };
         });
