@@ -1,6 +1,8 @@
 import chalk from 'chalk';
+import { Message } from 'discord.js';
 
 import config from '../load-config';
+import NamespaceSettings from '../structs/namespace-settings';
 
 export function genericLogger(
     type: 0 | 1,
@@ -57,4 +59,43 @@ export function convertBoolean(str: string): boolean | null {
         default:
             return null;
     }
+}
+
+export function matchesNamespaceType(
+    runType: 'personal' | 'guild',
+    possibleTypes: 'personal' | 'guild' | 'both',
+): boolean {
+    switch (possibleTypes) {
+        case 'both':
+            return true;
+        case 'personal':
+            if (runType === 'personal') {
+                return true;
+            }
+            break;
+        case 'guild':
+            if (runType === 'guild') {
+                return true;
+            }
+            break;
+    }
+
+    return false;
+}
+
+export function hasElevatedPerms(message: Message, permRole: string): boolean {
+    // TODO: possible security flaw, probably better way to do this exists
+    // Command not run in server
+    if (!message.member) return true;
+
+    // Has manage server
+    if (message.member.hasPermission('MANAGE_GUILD')) return true;
+
+    // Doesn't have manage server and no role is set
+    if (permRole.length === 0) return false;
+
+    // Member has perm role
+    if (message.member.roles.cache.get(permRole)) return true;
+
+    return false;
 }

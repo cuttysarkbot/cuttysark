@@ -4,4 +4,6 @@ export default interface NamespaceSettings {
     clipPrefixEnabled: boolean;
     customPrefix: string;
     deleteClipRequest: boolean;
+    permRole: string;
+    createRequirePerms: boolean;
 }

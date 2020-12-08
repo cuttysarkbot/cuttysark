@@ -23,6 +23,14 @@ export default (encKey: string, signKey: string): Schema => {
             type: String,
             default: DefaultNamespaceSettings.customPrefix,
         },
+        permRole: {
+            type: String,
+            default: DefaultNamespaceSettings.permRole,
+        },
+        createRequirePerms: {
+            type: Boolean,
+            default: DefaultNamespaceSettings.createRequirePerms,
+        },
     });
     schema.plugin(encrypt, {
         encryptionKey: encKey,

@@ -5,6 +5,8 @@ const defaultNamespaceSettings: NamespaceSettings = {
     clipPrefixEnabled: true,
     customPrefix: '',
     deleteClipRequest: false,
+    permRole: '',
+    createRequirePerms: false,
 };
 
 export default defaultNamespaceSettings;

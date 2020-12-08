@@ -1,6 +1,6 @@
 import Command from '../structs/command';
 
-import { debug } from '../utils/generic-utils';
+import { debug, hasElevatedPerms } from '../utils/generic-utils';
 import {
     sendMessage,
     sendError,
@@ -18,7 +18,7 @@ const Clear: Command = {
 
         if (
             options.runType === 'guild' &&
-            !message.member?.hasPermission('ADMINISTRATOR')
+            !hasElevatedPerms(message, options.namespaceSettings.permRole)
         ) {
             await sendUserPermError(message.channel);
             return;

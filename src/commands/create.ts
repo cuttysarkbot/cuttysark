@@ -3,8 +3,12 @@ import fetch from 'node-fetch';
 
 import Command from '../structs/command';
 
-import { debug } from '../utils/generic-utils';
-import { sendMessage, sendError } from '../utils/message-utils';
+import { debug, hasElevatedPerms } from '../utils/generic-utils';
+import {
+    sendMessage,
+    sendError,
+    sendUserPermError,
+} from '../utils/message-utils';
 
 const MAX_ATTACHMENT_SIZE = 8000000; // 8MB - that is megabyte, not mebibyte
 const MAX_CLIP_TOKEN_LENGTH = 1000;
@@ -17,6 +21,14 @@ const Create: Command = {
     commandType: 'both',
     run: async (message, storage, args, options) => {
         debug('Create', 'Create command executed');
+
+        if (
+            options.namespaceSettings.createRequirePerms &&
+            !hasElevatedPerms(message, options.namespaceSettings.permRole)
+        ) {
+            await sendUserPermError(message.channel);
+            return;
+        }
 
         const clipToken = args.toLowerCase().trim();
 
@@ -67,7 +79,7 @@ const Create: Command = {
 
             if (
                 MessageMentions.EVERYONE_PATTERN.test(
-                    message.content.toLowerCase(),
+                    collMsg.content.toLowerCase(),
                 )
             ) {
                 await sendError(
