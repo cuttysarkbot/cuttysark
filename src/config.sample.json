@@ -5,6 +5,7 @@
         "type": "LISTENING"
     },
     "developer": "aquarium, kindle, and kermit",
+    "inviteLink": "",
     "defaultGuildPrefix": ";",
     "defaultPersonalPrefix": "&",
     "tokenEnvVar": "CUTTYSARK_DISCORD_TOKEN",

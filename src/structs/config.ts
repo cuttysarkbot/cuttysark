@@ -12,6 +12,7 @@ interface Config {
         type: DiscordActivityType;
     };
     developer: string;
+    inviteLink: string;
     defaultGuildPrefix: string;
     defaultPersonalPrefix: string;
     tokenEnvVar: string;
