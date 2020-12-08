@@ -12,8 +12,8 @@ const MAX_CLIP_TOKEN_LENGTH = 1000;
 const Create: Command = {
     name: 'create',
     triggers: ['create', 'new', 'add'],
-    desc: 'Create a new clip',
-    syntax: '[clip name]',
+    desc: 'create a new clip',
+    syntax: '<clip name>',
     commandType: 'both',
     run: async (message, storage, args, options) => {
         debug('Create', 'Create command executed');

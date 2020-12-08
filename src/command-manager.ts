@@ -6,8 +6,17 @@ import List from './commands/list';
 import Clear from './commands/clear';
 import Stats from './commands/stats';
 import Invite from './commands/invite';
+import Help from './commands/help';
 
-const commandList: Command[] = [Create, Remove, List, Clear, Stats, Invite];
+const commandList: Command[] = [
+    Create,
+    Remove,
+    List,
+    Clear,
+    Stats,
+    Invite,
+    Help,
+];
 const commandMap: Record<string, Command> = {};
 const personalCommandMap: Record<string, Command> = {};
 const guildCommandMap: Record<string, Command> = {};

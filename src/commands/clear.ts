@@ -10,7 +10,7 @@ import {
 const Clear: Command = {
     name: 'clear',
     triggers: ['clear'],
-    desc: 'Clear clips',
+    desc: 'clear clips',
     syntax: '',
     commandType: 'both',
     run: async (message, storage, args, options) => {

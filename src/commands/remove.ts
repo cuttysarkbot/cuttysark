@@ -10,8 +10,8 @@ import {
 const Remove: Command = {
     name: 'remove',
     triggers: ['remove', 'delete'],
-    desc: 'Remove a clip',
-    syntax: '[clip name]',
+    desc: 'remove a clip',
+    syntax: '<clip name>',
     commandType: 'both',
     run: async (message, storage, args, options) => {
         debug('Remove', 'Remove command executed');

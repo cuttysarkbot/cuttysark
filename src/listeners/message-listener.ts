@@ -3,7 +3,11 @@ import Discord from 'discord.js';
 import config from '../load-config';
 import { debug, error, getCommandNameAndArgs } from '../utils/generic-utils';
 import StorageConnector from '../storage/storage-connector';
-import { getPersonalCommand, getGuildCommand } from '../command-manager';
+import {
+    getPersonalCommand,
+    getGuildCommand,
+    commands,
+} from '../command-manager';
 import { sendMessage, sendError } from '../utils/message-utils';
 import Command from '../structs/command';
 import CommandOptions from '../structs/command-options';
@@ -57,7 +61,9 @@ use the \`help\` command for more information`,
             return;
         }
 
-        const partialCommandOptions: Partial<CommandOptions> = {};
+        const partialCommandOptions: Partial<CommandOptions> = {
+            commandList: commands,
+        };
 
         let command: Command | null = null;
 

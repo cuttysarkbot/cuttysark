@@ -6,7 +6,7 @@ import { sendMessage, sendError } from '../utils/message-utils';
 const List: Command = {
     name: 'list',
     triggers: ['list'],
-    desc: 'List clips',
+    desc: 'list clips',
     syntax: '',
     commandType: 'both',
     run: async (message, storage, args, options) => {

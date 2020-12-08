@@ -8,7 +8,7 @@ import { sendMessage } from '../utils/message-utils';
 const Invite: Command = {
     name: 'invite',
     triggers: ['invite'],
-    desc: 'Get bot invite link',
+    desc: 'get bot invite link',
     syntax: '',
     commandType: 'both',
     run: async (message, storage, args, options) => {

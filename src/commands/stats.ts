@@ -8,7 +8,7 @@ import { sendMessage } from '../utils/message-utils';
 const Stats: Command = {
     name: 'stats',
     triggers: ['stats', 'statistics'],
-    desc: 'See bot statistics',
+    desc: 'see bot statistics',
     syntax: '',
     commandType: 'both',
     run: async (message, storage, args, options) => {
