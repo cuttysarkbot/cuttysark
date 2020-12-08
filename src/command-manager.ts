@@ -8,6 +8,7 @@ import Stats from './commands/stats';
 import Invite from './commands/invite';
 import Help from './commands/help';
 import Settings from './commands/settings';
+import Ping from './commands/ping';
 
 const commandList: Command[] = [
     Create,
@@ -18,6 +19,7 @@ const commandList: Command[] = [
     Invite,
     Help,
     Settings,
+    Ping,
 ];
 const commandMap: Record<string, Command> = {};
 const personalCommandMap: Record<string, Command> = {};
