@@ -4,8 +4,9 @@ import Create from './commands/create';
 import Remove from './commands/remove';
 import List from './commands/list';
 import Clear from './commands/clear';
+import Stats from './commands/stats';
 
-const commandList: Command[] = [Create, Remove, List, Clear];
+const commandList: Command[] = [Create, Remove, List, Clear, Stats];
 const commandMap: Record<string, Command> = {};
 const personalCommandMap: Record<string, Command> = {};
 const guildCommandMap: Record<string, Command> = {};

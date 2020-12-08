@@ -4,12 +4,13 @@
         "name": "clips",
         "type": "LISTENING"
     },
+    "developer": "aquarium, kindle, and kermit",
     "defaultGuildPrefix": ";",
     "defaultPersonalPrefix": "&",
     "tokenEnvVar": "CUTTYSARK_DISCORD_TOKEN",
     "encKeyEnvVar": "CUTTYSARK_STORAGE_ENC_KEY",
     "signKeyEnvVar": "CUTTYSARK_STORAGE_SIGN_KEY",
     "mongoUriEnvVar": "CUTTYSARK_STORAGE_MONGO_URI",
-    "readDotEnv": true,
-    "debugMode": true
+    "readDotEnv": false,
+    "debugMode": false
 }
