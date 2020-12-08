@@ -127,11 +127,15 @@ export default class StorageConnector {
         namespaceId: string,
     ): Promise<NamespaceSettings> {
         debug('Storage', 'Generating and saving namespace settings...');
-        // TODO: maybe make this a bit more flexible regarding the schema
-        const namespaceDoc = new this.NamespaceSettingsModel({
+        const settingsObj: Partial<NamespaceSettings> = {
             _id: namespaceId,
-            clipPrefixEnabled: DefaultNamespaceSettings.clipPrefixEnabled,
+        };
+
+        Object.keys(DefaultNamespaceSettings).forEach((setting) => {
+            settingsObj[setting] = DefaultNamespaceSettings[setting];
         });
+
+        const namespaceDoc = new this.NamespaceSettingsModel(settingsObj);
         namespaceDoc.save();
 
         if (!this._settingsObjs) {
@@ -168,11 +172,18 @@ export default class StorageConnector {
     ): Promise<NamespaceSettings> {
         debug('Storage', 'Setting namespace settings...');
         // TODO: maybe make this a bit more flexible regarding the schema
-        await this.NamespaceSettingsModel.updateOne(
+
+        const settingsObj: Partial<NamespaceSettings> = {
+            _id: newSettings.namespaceId,
+        };
+
+        Object.keys(DefaultNamespaceSettings).forEach((setting) => {
+            settingsObj[setting] = newSettings[setting];
+        });
+
+        await this.NamespaceSettingsModel.replaceOne(
             { _id: newSettings.namespaceId },
-            {
-                clipPrefixEnabled: newSettings.clipPrefixEnabled,
-            },
+            settingsObj,
         );
 
         if (!this._settingsObjs) {

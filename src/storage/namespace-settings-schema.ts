@@ -19,11 +19,15 @@ export default (encKey: string, signKey: string): Schema => {
             type: Boolean,
             default: DefaultNamespaceSettings.deleteClipRequest,
         },
-        customPrefix: String,
+        customPrefix: {
+            type: String,
+            default: DefaultNamespaceSettings.customPrefix,
+        },
     });
     schema.plugin(encrypt, {
         encryptionKey: encKey,
         signingKey: signKey,
+        requireAuthenticationCode: false,
     });
     return schema;
 };

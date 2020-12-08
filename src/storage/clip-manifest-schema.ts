@@ -36,6 +36,7 @@ export default (encKey: string, signKey: string): Schema => {
         encryptionKey: encKey,
         signingKey: signKey,
         encryptedFields: ['owner', 'token', 'content', 'attachments'],
+        requireAuthenticationCode: false,
     });
     return schema;
 };

@@ -7,6 +7,7 @@ import Clear from './commands/clear';
 import Stats from './commands/stats';
 import Invite from './commands/invite';
 import Help from './commands/help';
+import Settings from './commands/settings';
 
 const commandList: Command[] = [
     Create,
@@ -16,6 +17,7 @@ const commandList: Command[] = [
     Stats,
     Invite,
     Help,
+    Settings,
 ];
 const commandMap: Record<string, Command> = {};
 const personalCommandMap: Record<string, Command> = {};

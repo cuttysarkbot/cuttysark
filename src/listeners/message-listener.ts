@@ -36,9 +36,15 @@ export default async function MessageListener(
             : null;
 
         const personalPrefix =
-            personalSettings.customPrefix || config.defaultPersonalPrefix;
+            personalSettings.customPrefix !== ''
+                ? personalSettings.customPrefix
+                : config.defaultPersonalPrefix;
         const guildPrefix =
-            guildSettings?.customPrefix || config.defaultGuildPrefix;
+            guildSettings !== null &&
+            guildSettings?.customPrefix &&
+            guildSettings?.customPrefix !== ''
+                ? guildSettings?.customPrefix
+                : config.defaultGuildPrefix;
 
         // Pinging bot will display prefix
         if (

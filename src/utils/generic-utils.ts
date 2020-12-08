@@ -43,3 +43,18 @@ export function getCommandNameAndArgs(
 
     return [prefixless.substring(0, firstSpaceIndex), prefixAndTrigger];
 }
+
+export function convertBoolean(str: string): boolean | null {
+    switch (str) {
+        case 'true':
+        case 'on':
+        case 'yes':
+            return true;
+        case 'false':
+        case 'off':
+        case 'no':
+            return false;
+        default:
+            return null;
+    }
+}

@@ -24,6 +24,8 @@ there are two types of clips you can make. when you make a server clip, you can 
 
 use the server's prefix to create and use server clips. use your personal prefix to create and use your personal clips. ping the bot to see your prefixes.
 
+use clips with by typing the prefix and then the clip's name, for example, \`;my really cool clip name\`
+
 here are my commands:\n\n`;
 
             Object.values(options.commandList).forEach((command) => {

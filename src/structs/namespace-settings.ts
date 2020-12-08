@@ -2,6 +2,6 @@ export default interface NamespaceSettings {
     [index: string]: any;
     namespaceId: string;
     clipPrefixEnabled: boolean;
-    customPrefix?: string;
+    customPrefix: string;
     deleteClipRequest: boolean;
 }
