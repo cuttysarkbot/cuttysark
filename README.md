@@ -16,7 +16,7 @@ For fun automatic prettier magic when you save your files, set your `Editor: Def
 
 ## Configuration
 
-This project has a few configuration options that you should make note of. Configuration is primarily done through the `src/config.json` file, which contains some options that the bot should use. Rename `config.sample.json` to `config.json` and edit the configuration as needed before running the project.
+This project has a few configuration options that you should make note of. Configuration is primarily done through the `src/config.json` file, which contains some options that the bot should use. Make a copy of `config.sample.json` called `config.json` and edit the configuration as needed before running the project.
 
 Please note that some of the config options are named `*EnvVar`, which means that the option refers to the name of an environment variable which must be present on your system whose value will be read to find the corresponding information. For example, your bot's token will need to be set to an environment variable which has the same name as the value of `tokenEnvVar`.
 
