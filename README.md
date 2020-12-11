@@ -30,7 +30,7 @@ An example of a `.env` file with the default config variable names:
 CUTTYSARK_DISCORD_TOKEN=aaaaaaaaaaaaaaaaaaaaaaaa.aaaaaa.aa-aaaaaaaaaaaaaaaaaaaaaaaa
 CUTTYSARK_STORAGE_ENC_KEY=nfUI#Ne289nf9ujisoj4289jfOIj4289jf2894ufj9we
 CUTTYSARK_STORAGE_SIGN_KEY=ijodfjNWG@984n2ui308HUD42iofn2398340=@489jN8942h49nfuJNn
-CUTTYSARK_STORAGE_MONGO_URI=mongodb://myDBReader:D1fficultP%40ssw0rd@mongodb0.example.com:27017
+CUTTYSARK_STORAGE_MONGO_URI=mongodb://myDBReader:D1fficultP%40ssw0rd@mongodb0.example.com:27017/dbName
 ```
 
 ### Storage and Keys
