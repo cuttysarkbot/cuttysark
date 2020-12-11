@@ -6,7 +6,7 @@
         "dev": "nodemon",
         "debug": "nodemon --inspect",
         "build": "tsc",
-        "start": "node build/src/main.js"
+        "start": "node build/main.js"
     },
     "repository": "https://github.com/cuttysarkbot/cuttysark",
     "license": "Apache-2.0",
