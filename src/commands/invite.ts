@@ -3,7 +3,7 @@ import Command from '../structs/command';
 import config from '../load-config';
 
 import { debug } from '../utils/generic-utils';
-import { sendMessage } from '../utils/message-utils';
+import { sendComplex } from '../utils/message-utils';
 
 const Invite: Command = {
     name: 'invite',
@@ -14,8 +14,11 @@ const Invite: Command = {
     run: async (message, storage, args, options) => {
         debug('Invite', 'Invite command executed');
 
-        sendMessage(
-            `invite ${config.name}:\n${config.inviteLink}`,
+        await sendComplex(
+            {
+                title: `click here to invite ${config.name} to your server`,
+                url: config.inviteLink,
+            },
             message.channel,
         );
     },

@@ -59,9 +59,12 @@ const Clear: Command = {
                     );
                 }),
             );
-            sendMessage('clips cleared!', message.channel);
+            await sendMessage('clips cleared!', message.channel);
         } catch (error) {
-            sendError('an error occured while clearing clips', message.channel);
+            await sendError(
+                'an error occured while clearing clips',
+                message.channel,
+            );
         }
     },
 };

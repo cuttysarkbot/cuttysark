@@ -12,7 +12,7 @@ const Ping: Command = {
     run: async (message, storage, args, options) => {
         debug('Ping', 'Ping command executed');
 
-        sendMessage(
+        await sendMessage(
             `pong! my ping is ${message.client.ws.ping}ms.`,
             message.channel,
         );

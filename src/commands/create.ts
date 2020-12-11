@@ -34,7 +34,7 @@ const Create: Command = {
 
         if (clipToken.length === 0) {
             await sendError(
-                `please provide a name for your clip, like this: \`${options.prefixAndTrigger} my really cool clip name\``,
+                `please provide a name for your clip, like this:\n\`${options.prefixAndTrigger} my really cool clip name\``,
                 message.channel,
             );
             return;

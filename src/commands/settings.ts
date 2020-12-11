@@ -14,6 +14,7 @@ import {
     sendMessage,
     sendError,
     sendUserPermError,
+    sendComplex,
 } from '../utils/message-utils';
 
 import DefaultNamespaceSettings from '../storage/default-namespace-settings';
@@ -164,7 +165,15 @@ the following settings can be configured:\n`;
                 if (!existsInNamespace) return;
                 settingsListMessage += `- \`${name}\`: ${settingsList[name].desc}\n`;
             });
-            sendMessage(settingsListMessage, message.channel);
+
+            await sendComplex(
+                {
+                    title: `${config.name} settings`,
+                    description: settingsListMessage,
+                },
+                message.channel,
+            );
+
             return;
         }
 
@@ -183,7 +192,7 @@ the following settings can be configured:\n`;
                     settingsList[settingName].namespaceType,
                 )
             ) {
-                sendError('that setting does not exist', message.channel);
+                await sendError('that setting does not exist', message.channel);
                 return;
             }
 
@@ -191,13 +200,25 @@ the following settings can be configured:\n`;
 
             // Get setting val
             if (settingVal === '') {
-                let settingMessage = `__**\`${settingName}\`**__
-${setting.desc}
-
-current value: \`${setting.valCast(settings[setting.propName])}\`
-
-possible values: \`${setting.value}\``;
-                sendMessage(settingMessage, message.channel);
+                await sendComplex(
+                    {
+                        title: `\`${settingName}\``,
+                        description: setting.desc,
+                        fields: [
+                            {
+                                name: 'current value',
+                                value: `\`${setting.valCast(
+                                    settings[setting.propName],
+                                )}\``,
+                            },
+                            {
+                                name: 'possible values',
+                                value: `\`${setting.value}\``,
+                            },
+                        ],
+                    },
+                    message.channel,
+                );
                 return;
             }
 
@@ -211,7 +232,7 @@ possible values: \`${setting.value}\``;
 
                     settings[setting.propName] = newVal;
                 } catch (error) {
-                    sendError(
+                    await sendError(
                         'that is an invalid value for this setting',
                         message.channel,
                     );
@@ -223,7 +244,7 @@ possible values: \`${setting.value}\``;
         try {
             await storage.setNamespaceSettings(settings);
         } catch (error) {
-            sendError(
+            await sendError(
                 'an error occurred while saving settings',
                 message.channel,
             );

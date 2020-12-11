@@ -1,7 +1,7 @@
 import Command from '../structs/command';
 
 import { debug } from '../utils/generic-utils';
-import { sendMessage, sendError } from '../utils/message-utils';
+import { sendError, sendComplex } from '../utils/message-utils';
 
 const List: Command = {
     name: 'list',
@@ -53,8 +53,11 @@ const List: Command = {
             return;
         }
 
-        await sendMessage(
-            `you are viewing page ${pageNum} of ${pages.length}\n${pageToSend}`,
+        await sendComplex(
+            {
+                title: `you are viewing page ${pageNum} of ${pages.length}`,
+                description: pageToSend,
+            },
             message.channel,
         );
     },

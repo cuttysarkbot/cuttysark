@@ -15,6 +15,7 @@ interface Config {
     inviteLink: string;
     defaultGuildPrefix: string;
     defaultPersonalPrefix: string;
+    embedColor: string;
     tokenEnvVar: string;
     encKeyEnvVar: string;
     signKeyEnvVar: string;

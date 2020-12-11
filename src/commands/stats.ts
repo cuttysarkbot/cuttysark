@@ -3,7 +3,7 @@ import Command from '../structs/command';
 import config from '../load-config';
 
 import { debug } from '../utils/generic-utils';
-import { sendMessage } from '../utils/message-utils';
+import { sendComplex } from '../utils/message-utils';
 
 const Stats: Command = {
     name: 'stats',
@@ -16,12 +16,15 @@ const Stats: Command = {
 
         const serverCount = message.client.guilds.cache.size;
 
-        sendMessage(
-            `hi!
+        await sendComplex(
+            {
+                title: `${config.name} stats`,
+                description: `hi!
 i was created by ${config.developer}
 i am currently in ${serverCount} servers
 you can invite me to your server by using the \`invite\` command
 thanks for sailing with us`,
+            },
             message.channel,
         );
     },

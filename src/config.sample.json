@@ -8,6 +8,7 @@
     "inviteLink": "",
     "defaultGuildPrefix": ";",
     "defaultPersonalPrefix": "&",
+    "embedColor": "#68ADD4",
     "tokenEnvVar": "CUTTYSARK_DISCORD_TOKEN",
     "encKeyEnvVar": "CUTTYSARK_STORAGE_ENC_KEY",
     "signKeyEnvVar": "CUTTYSARK_STORAGE_SIGN_KEY",

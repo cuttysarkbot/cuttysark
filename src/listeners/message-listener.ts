@@ -8,7 +8,12 @@ import {
     getGuildCommand,
     commands,
 } from '../command-manager';
-import { sendMessage, sendError } from '../utils/message-utils';
+import {
+    sendMessage,
+    sendRawMessage,
+    sendError,
+    sendComplex,
+} from '../utils/message-utils';
 import Command from '../structs/command';
 import CommandOptions from '../structs/command-options';
 import ClipManifest from '../structs/clip-manifest';
@@ -52,16 +57,18 @@ export default async function MessageListener(
             messageText === `<@!${message.client.user?.id}>`
         ) {
             debug('MessageListener', `Prefix requested`);
-            await sendMessage(
-                `hi, i'm ${config.name}
-
-your personal prefix: \`${personalPrefix}\`${
-                    guildAvailable
-                        ? `\nthis server's prefix: \`${guildPrefix}\``
-                        : ''
-                }
+            await sendComplex(
+                {
+                    title: `hi, i'm ${config.name}`,
+                    description: `${
+                        guildAvailable
+                            ? `this server's prefix: \`${guildPrefix}\``
+                            : ''
+                    }
+your personal prefix: \`${personalPrefix}\`
 
 use the \`help\` command for more information`,
+                },
                 message.channel,
             );
             return;
@@ -116,8 +123,8 @@ use the \`help\` command for more information`,
 
                 if (personalPrefix === guildPrefix && guildAvailable) {
                     await sendMessage(
-                        `please note: your personal prefix is the same as this server's prefix, so the personal version of this command will be run
-you will need to change your personal prefix to use the server command`,
+                        `please note: your personal prefix is the same as this server's prefix, so the personal version of this command will be run.
+you will need to change your personal prefix to use the server command.`,
                         message.channel,
                     );
                 }
@@ -201,7 +208,7 @@ you will need to change your personal prefix to use the server command`,
                 };
 
                 // Send clip
-                await sendMessage(messageObj, message.channel);
+                await sendRawMessage(messageObj, message.channel);
 
                 // Possibly delete clip request
                 let shouldDelete = false;
