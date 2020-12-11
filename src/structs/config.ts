@@ -13,6 +13,7 @@ interface Config {
     };
     developer: string;
     inviteLink: string;
+    supportServer: string;
     defaultGuildPrefix: string;
     defaultPersonalPrefix: string;
     embedColor: string;
