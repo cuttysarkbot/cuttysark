@@ -2,6 +2,8 @@
 
 Cutty Sark is a ~~clipper ship~~Discord bot to create message clips which can be used over and over.
 
+[Invite Cutty Sark to your server.](https://discord.com/oauth2/authorize?client_id=760946007021846599&permissions=52224&scope=bot)
+
 ## Development
 
 We use [yarn](https://yarnpkg.com) as our package manager, so you should too. Run `yarn install --production=false` to install all the dependencies (and development tools) for this project.

@@ -5,7 +5,7 @@
         "type": "LISTENING"
     },
     "developer": "aquarium, kindle, and kermit",
-    "inviteLink": "",
+    "inviteLink": "https://discord.com/oauth2/authorize?client_id=760946007021846599&permissions=52224&scope=bot",
     "supportServer": "https://discord.gg/W7ZRPBFM3H",
     "defaultGuildPrefix": ";",
     "defaultPersonalPrefix": "&",
