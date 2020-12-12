@@ -81,8 +81,11 @@ export default class StorageConnector {
             let namespaceSettings: Partial<NamespaceSettings> = {};
             Object.keys(DefaultNamespaceSettings).forEach((key: string) => {
                 // set to default if doesn't exist
+                const propVal = doc.get(key);
                 namespaceSettings[key] =
-                    doc.get(key) || DefaultNamespaceSettings[key];
+                    propVal === undefined
+                        ? DefaultNamespaceSettings[key]
+                        : propVal;
             });
             namespaceSettings.namespaceId = doc.id;
 
@@ -171,17 +174,15 @@ export default class StorageConnector {
         newSettings: NamespaceSettings,
     ): Promise<NamespaceSettings> {
         debug('Storage', 'Setting namespace settings...');
-        // TODO: maybe make this a bit more flexible regarding the schema
 
-        const settingsObj: Partial<NamespaceSettings> = {
-            _id: newSettings.namespaceId,
-        };
+        const settingsObj: Partial<NamespaceSettings> = {};
 
         Object.keys(DefaultNamespaceSettings).forEach((setting) => {
             settingsObj[setting] = newSettings[setting];
         });
+        delete settingsObj.namespaceId;
 
-        await this.NamespaceSettingsModel.replaceOne(
+        await this.NamespaceSettingsModel.updateOne(
             { _id: newSettings.namespaceId },
             settingsObj,
         );
