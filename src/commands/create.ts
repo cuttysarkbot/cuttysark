@@ -70,7 +70,7 @@ const Create: Command = {
                 (collMsg) => message.author.id === collMsg.author.id,
                 {
                     max: 1,
-                    time: 30000,
+                    time: 60000,
                     errors: ['time'],
                 },
             );
