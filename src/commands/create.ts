@@ -117,6 +117,7 @@ const Create: Command = {
 
                 await sendMessage('clip saved!', message.channel);
             } catch (error) {
+                debug('Create', 'An error occured while saving a clip:', error);
                 await sendError(
                     'an error occured while saving your clip',
                     message.channel,

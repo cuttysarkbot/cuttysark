@@ -130,15 +130,16 @@ export default class StorageConnector {
         namespaceId: string,
     ): Promise<NamespaceSettings> {
         debug('Storage', 'Generating and saving namespace settings...');
-        const settingsObj: Partial<NamespaceSettings> = {
-            _id: namespaceId,
-        };
+        const settingsObj: Partial<NamespaceSettings> = {};
 
         Object.keys(DefaultNamespaceSettings).forEach((setting) => {
             settingsObj[setting] = DefaultNamespaceSettings[setting];
         });
 
-        const namespaceDoc = new this.NamespaceSettingsModel(settingsObj);
+        const namespaceDoc = new this.NamespaceSettingsModel({
+            _id: namespaceId,
+            ...settingsObj,
+        });
         namespaceDoc.save();
 
         if (!this._settingsObjs) {
@@ -146,9 +147,13 @@ export default class StorageConnector {
                 'StorageConnector must be initialized before usage',
             );
         }
-        this._settingsObjs[namespaceId] = DefaultNamespaceSettings;
 
-        return DefaultNamespaceSettings;
+        // Once saved, insert namespaceId field
+        settingsObj.namespaceId = namespaceId;
+
+        this._settingsObjs[namespaceId] = settingsObj as NamespaceSettings;
+
+        return settingsObj as NamespaceSettings;
     }
 
     async getNamespaceSettings(
