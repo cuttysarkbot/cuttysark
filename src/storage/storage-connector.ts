@@ -106,8 +106,11 @@ export default class StorageConnector {
             let namespaceSettings: Partial<NamespaceSettings> = {};
             Object.values(DefaultNamespaceSettings).forEach((key: string) => {
                 // set to default if doesn't exist
+                const propVal = settingsDoc.get(key);
                 namespaceSettings[key] =
-                    settingsDoc.get(key) || DefaultNamespaceSettings[key];
+                    propVal === undefined
+                        ? DefaultNamespaceSettings[key]
+                        : propVal;
             });
             namespaceSettings.namespaceId = settingsDoc.id;
 
@@ -140,7 +143,7 @@ export default class StorageConnector {
             _id: namespaceId,
             ...settingsObj,
         });
-        namespaceDoc.save();
+        await namespaceDoc.save();
 
         if (!this._settingsObjs) {
             throw new Error(
@@ -187,9 +190,12 @@ export default class StorageConnector {
         });
         delete settingsObj.namespaceId;
 
-        await this.NamespaceSettingsModel.updateOne(
+        await this.NamespaceSettingsModel.replaceOne(
             { _id: newSettings.namespaceId },
-            settingsObj,
+            {
+                _id: newSettings.namespaceId,
+                ...settingsObj,
+            },
         );
 
         if (!this._settingsObjs) {

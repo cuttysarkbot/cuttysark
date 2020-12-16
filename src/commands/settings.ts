@@ -44,7 +44,7 @@ const Settings: Command = {
         const settingsList: Record<string, any> = {
             clipprefix: {
                 desc: 'sets whether you need to type the prefix to use clips',
-                value: 'true or false',
+                value: '"on" or "off"',
                 propName: 'clipPrefixEnabled',
                 namespaceType: 'both',
                 valCast: (value: boolean): string => (value ? 'on' : 'off'),
@@ -60,7 +60,7 @@ const Settings: Command = {
             deletecliprequest: {
                 desc:
                     'sets whether the bot should delete the message that requests a clip',
-                value: 'true or false',
+                value: '"on" or "off"',
                 propName: 'deleteClipRequest',
                 namespaceType: 'both',
                 valCast: (value: boolean): string => (value ? 'on' : 'off'),
@@ -134,7 +134,7 @@ const Settings: Command = {
             createrequireperms: {
                 desc:
                     'sets whether the create command should require permissions',
-                value: 'true or false',
+                value: '"on" or "off"',
                 propName: 'createRequirePerms',
                 namespaceType: 'guild',
                 valCast: (value: boolean): string => (value ? 'on' : 'off'),
