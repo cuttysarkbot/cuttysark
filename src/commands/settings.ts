@@ -42,7 +42,7 @@ const Settings: Command = {
 
         // Big settings object
         const settingsList: Record<string, any> = {
-            clipprefixenabled: {
+            clipprefix: {
                 desc: 'sets whether you need to type the prefix to use clips',
                 value: 'true or false',
                 propName: 'clipPrefixEnabled',

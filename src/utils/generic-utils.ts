@@ -51,10 +51,16 @@ export function convertBoolean(str: string): boolean | null {
         case 'true':
         case 'on':
         case 'yes':
+        case 'enable':
+        case 'enabled':
+        case '1':
             return true;
         case 'false':
         case 'off':
         case 'no':
+        case 'disable':
+        case 'disabled':
+        case '0':
             return false;
         default:
             return null;
