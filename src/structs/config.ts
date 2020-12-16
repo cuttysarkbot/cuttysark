@@ -7,6 +7,7 @@ type DiscordActivityType =
 
 interface Config {
     name: string;
+    version: string;
     activity: {
         name: string;
         type: DiscordActivityType;

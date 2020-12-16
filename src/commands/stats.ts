@@ -15,15 +15,18 @@ const Stats: Command = {
         debug('Stats', 'Stats command executed');
 
         const serverCount = message.client.guilds.cache.size;
+        const clipCount = await storage.ClipManifestModel.estimatedDocumentCount();
 
         await sendComplex(
             {
                 title: `${config.name} stats`,
-                description: `hi!
-i was created by ${config.developer}
-i am currently in ${serverCount} servers
-you can invite me to your server by using the \`invite\` command
-thanks for sailing with us`,
+                description: `hi, i'm ${config.name}!
+i'm currently running on version \`${config.version}\`.
+i was created by ${config.developer}.
+i am currently in \`${serverCount}\` servers.
+i'm currently managing \`${clipCount}\` clips.
+you can invite me to your server by using the \`invite\` command.
+thanks for sailing with us!`,
             },
             message.channel,
         );
