@@ -17,6 +17,8 @@ interface Config {
     supportServer: string;
     defaultGuildPrefix: string;
     defaultPersonalPrefix: string;
+    backupGuildId: string;
+    backupChannelId: string;
     embedColor: string;
     tokenEnvVar: string;
     encKeyEnvVar: string;

@@ -1,6 +1,6 @@
 {
     "name": "cutty sark",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "activity": {
         "name": "clips",
         "type": "LISTENING"
@@ -10,6 +10,8 @@
     "supportServer": "https://discord.gg/W7ZRPBFM3H",
     "defaultGuildPrefix": ";",
     "defaultPersonalPrefix": "&",
+    "backupGuildId": "",
+    "backupChannelId": "",
     "embedColor": "#68ADD4",
     "tokenEnvVar": "CUTTYSARK_DISCORD_TOKEN",
     "encKeyEnvVar": "CUTTYSARK_STORAGE_ENC_KEY",

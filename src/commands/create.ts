@@ -1,7 +1,8 @@
-import { MessageMentions } from 'discord.js';
-import fetch from 'node-fetch';
+import { TextChannel, MessageMentions } from 'discord.js';
 
 import Command from '../structs/command';
+
+import config from '../load-config';
 
 import { debug, hasElevatedPerms } from '../utils/generic-utils';
 import {
@@ -102,7 +103,42 @@ const Create: Command = {
                             throw new Error('Attachment too large');
                         }
 
-                        return attachment.url;
+                        if (
+                            config.backupGuildId === '' &&
+                            config.backupChannelId === ''
+                        ) {
+                            return attachment.url;
+                        }
+
+                        try {
+                            const backupChannel = (
+                                await message.client.guilds.fetch(
+                                    config.backupGuildId,
+                                )
+                            )?.channels.resolve(config.backupChannelId);
+                            if (
+                                !backupChannel ||
+                                !(backupChannel instanceof TextChannel)
+                            ) {
+                                return attachment.url;
+                            }
+
+                            const attachmentMsg = await backupChannel.send({
+                                files: [attachment.url],
+                            });
+
+                            // Good variable names, I know
+                            const msgAttachmentUrl = attachmentMsg.attachments.array()[0];
+
+                            return msgAttachmentUrl.url;
+                        } catch (error) {
+                            debug(
+                                'Create',
+                                'An error occured while uploading the attachment:',
+                                error,
+                            );
+                            return attachment.url;
+                        }
                     }),
                 );
 
