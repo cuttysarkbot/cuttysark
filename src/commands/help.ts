@@ -24,6 +24,8 @@ use the server's prefix to create and use server clips. use your personal prefix
 
 use clips by typing the prefix and then the clip's name, for example, \`;my really cool clip name\`
 
+you can get more detailed help for a command by typing \`${options.prefixAndTrigger} commandName\`.
+
 here are my commands:\n`;
 
             Object.values(options.commandList).forEach((command) => {
