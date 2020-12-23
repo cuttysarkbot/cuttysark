@@ -20,7 +20,7 @@ const Help: Command = {
             // Get main help message
             let helpMessage: string = `there are two types of clips you can make. when you make a server clip, you can use that clip anywhere on the server where you made it. when you make a personal clip, *only you* will be able to use that clip on any server.
 
-use the server's prefix to create and use server clips. use your personal prefix to create and use your personal clips. ping the bot to see your prefixes.
+use the server's prefix to create and use server clips. use your personal prefix to create and use your personal clips. ping me to see your prefixes.
 
 use clips by typing the prefix and then the clip's name, for example, \`;my really cool clip name\`
 
