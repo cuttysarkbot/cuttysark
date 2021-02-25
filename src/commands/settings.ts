@@ -28,7 +28,10 @@ const Settings: Command = {
     run: async (message, storage, args, options) => {
         debug('Settings', 'Settings command executed');
 
-        if (!hasElevatedPerms(message, options.namespaceSettings.permRole)) {
+        if (
+            options.runType === 'guild' &&
+            !hasElevatedPerms(message, options.namespaceSettings.permRole)
+        ) {
             await sendUserPermError(message.channel);
             return;
         }
