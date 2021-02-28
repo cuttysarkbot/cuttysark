@@ -36,7 +36,7 @@ const Search: Command = {
             }
         });
 
-        if (searchResults.length > 1000 || resultCount > 30) {
+        if (searchResults.length > 1100 || resultCount > 30) {
             await sendError(
                 'please provide a more specific search',
                 message.channel,
