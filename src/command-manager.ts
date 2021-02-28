@@ -10,6 +10,8 @@ import Help from './commands/help';
 import Settings from './commands/settings';
 import Ping from './commands/ping';
 import Support from './commands/support';
+import Vote from './commands/vote';
+import Search from './commands/search';
 
 const commandList: Command[] = [
     Create,
@@ -22,10 +24,10 @@ const commandList: Command[] = [
     Settings,
     Ping,
     Support,
+    Vote,
+    Search,
 ];
 const commandMap: Record<string, Command> = {};
-const personalCommandMap: Record<string, Command> = {};
-const guildCommandMap: Record<string, Command> = {};
 
 commandList.forEach((command) => {
     commandMap[command.name] = command;

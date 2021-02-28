@@ -55,7 +55,7 @@ const List: Command = {
 
         await sendComplex(
             {
-                title: `you are viewing page ${pageNum} of ${pages.length}`,
+                title: `you are viewing page ${pageNum} of ${pages.length}\nyou have ${clipList.length} clips`,
                 description: pageToSend,
             },
             message.channel,

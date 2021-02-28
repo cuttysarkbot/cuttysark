@@ -1,5 +1,3 @@
-import { Document } from 'mongoose';
-
 export default interface ClipManifest {
     _id?: string;
     namespaceId: string;

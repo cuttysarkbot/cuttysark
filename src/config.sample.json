@@ -1,6 +1,6 @@
 {
     "name": "cutty sark",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "activity": {
         "name": "clips",
         "type": "LISTENING"
@@ -8,6 +8,7 @@
     "developer": "aquarium, kindle, and kermit",
     "inviteLink": "https://discord.com/oauth2/authorize?client_id=760946007021846599&permissions=52224&scope=bot",
     "supportServer": "https://discord.gg/W7ZRPBFM3H",
+    "voteURL": "https://top.gg/bot/760946007021846599/vote",
     "defaultGuildPrefix": ";",
     "defaultPersonalPrefix": "&",
     "backupGuildId": "",

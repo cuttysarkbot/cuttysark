@@ -15,6 +15,7 @@ interface Config {
     developer: string;
     inviteLink: string;
     supportServer: string;
+    voteURL: string;
     defaultGuildPrefix: string;
     defaultPersonalPrefix: string;
     backupGuildId: string;
