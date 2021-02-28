@@ -36,6 +36,14 @@ const Search: Command = {
             }
         });
 
+        if (searchResults.length > 1500) {
+            await sendError(
+                'please provide a more specific search',
+                message.channel,
+            );
+            return;
+        }
+
         if (resultCount === 0) {
             await sendError('no results found', message.channel);
         } else {
