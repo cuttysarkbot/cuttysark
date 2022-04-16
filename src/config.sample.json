@@ -18,6 +18,7 @@
     "encKeyEnvVar": "CUTTYSARK_STORAGE_ENC_KEY",
     "signKeyEnvVar": "CUTTYSARK_STORAGE_SIGN_KEY",
     "mongoUriEnvVar": "CUTTYSARK_STORAGE_MONGO_URI",
+    "topggApiToken": "CUTTYSARK_TOPGGAPI_TOKEN",
     "readDotEnv": false,
     "debugMode": false
 }

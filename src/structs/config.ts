@@ -25,6 +25,7 @@ interface Config {
     encKeyEnvVar: string;
     signKeyEnvVar: string;
     mongoUriEnvVar: string;
+    topggApiToken: string;
     readDotEnv: string;
     debugMode: boolean;
 }

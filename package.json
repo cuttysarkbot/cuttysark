@@ -12,6 +12,7 @@
     "license": "Apache-2.0",
     "private": true,
     "dependencies": {
+        "@top-gg/sdk": "^3.0.5",
         "bufferutil": "^4.0.2",
         "chalk": "^4.1.0",
         "discord.js": "^12.4.1",

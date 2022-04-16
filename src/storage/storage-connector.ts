@@ -6,16 +6,19 @@ import { generateClipId } from '../utils/storage-utils';
 
 import ClipManifestSchema from './clip-manifest-schema';
 import NamespaceSettingsSchema from './namespace-settings-schema';
+import UserVoteSchema from './user-vote-schema';
 
 import ClipManifest from '../structs/clip-manifest';
 import NamespaceSettings from '../structs/namespace-settings';
 import DefaultNamespaceSettings from './default-namespace-settings';
+import UserVote from '../structs/user-vote';
 
 export default class StorageConnector {
     m: mongoose.Mongoose;
     _db: mongoose.Connection | undefined;
     _clipManifest: mongoose.Model<mongoose.Document> | undefined;
     _namespaceSettings: mongoose.Model<mongoose.Document> | undefined;
+    _userVote: mongoose.Model<mongoose.Document> | undefined;
     _settingsObjs: Record<string, NamespaceSettings> | undefined;
 
     constructor() {
@@ -49,6 +52,15 @@ export default class StorageConnector {
         return this._namespaceSettings;
     }
 
+    get UserVoteModel(): mongoose.Model<mongoose.Document> {
+        if (!this._userVote) {
+            throw new Error(
+                'StorageConnector must be initialized before usage',
+            );
+        }
+        return this._userVote;
+    }
+
     async init(
         mongoUrl: string,
         encKey: string,
@@ -72,6 +84,10 @@ export default class StorageConnector {
         this._namespaceSettings = this.m.model(
             'NamespaceSettings',
             NamespaceSettingsSchema(encKey, signKey),
+        );
+        this._userVote = this.m.model(
+            'UserVote',
+            UserVoteSchema(encKey, signKey),
         );
 
         // Load all settings into memory
@@ -268,5 +284,32 @@ export default class StorageConnector {
                 attachments: clipDoc.get('attachments'),
             };
         });
+    }
+
+    async getUserVoteInfo(userId: string): Promise<UserVote> {
+        debug('Storage', 'Getting user vote info...');
+
+        const voteDoc = await this.UserVoteModel.findById(userId);
+
+        if (voteDoc) {
+            voteDoc.set('lastFetch', Date.now());
+            voteDoc.save(); // Run this async
+
+            return {
+                id: voteDoc.id,
+                lastVote: voteDoc.get('lastVote'),
+                lastFetch: voteDoc.get('lastFetch'),
+                firstFetch: voteDoc.get('firstFetch'),
+            };
+        } else {
+            const newVoteDoc = {
+                id: userId,
+                lastVote: 0,
+                lastFetch: Date.now(),
+                firstFetch: Date.now(),
+            };
+
+            return newVoteDoc;
+        }
     }
 }
