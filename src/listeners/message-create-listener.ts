@@ -206,7 +206,10 @@ you will need to change your personal prefix to use the server command.`,
                 debug('MessageCreateListener', 'Clip found');
 
                 const messageObj = {
-                    content: clipManifest.content,
+                    content:
+                        clipManifest.content && clipManifest.content.length > 0
+                            ? clipManifest.content
+                            : undefined,
                     files: clipManifest.attachments,
                 };
 
