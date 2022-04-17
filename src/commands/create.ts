@@ -67,14 +67,12 @@ const Create: Command = {
         try {
             debug('Create', 'Waiting for message...');
 
-            const collected = await message.channel.awaitMessages(
-                (collMsg) => message.author.id === collMsg.author.id,
-                {
-                    max: 1,
-                    time: 60000,
-                    errors: ['time'],
-                },
-            );
+            const collected = await message.channel.awaitMessages({
+                filter: (collMsg) => message.author.id === collMsg.author.id,
+                max: 1,
+                time: 60000,
+                errors: ['time'],
+            });
 
             const collMsg = Array.from(collected.values())[0];
 
@@ -128,10 +126,12 @@ const Create: Command = {
                             });
 
                             // Good variable names, I know
-                            const msgAttachmentUrl = attachmentMsg.attachments.array()[0];
+                            const msgAttachmentUrl =
+                                attachmentMsg.attachments.at(0);
 
-                            return msgAttachmentUrl.url;
-                        } catch (error) {
+                            // if uploading doesn't work, then use the original message url
+                            return msgAttachmentUrl?.url ?? attachment.url;
+                        } catch (error: any) {
                             debug(
                                 'Create',
                                 'An error occured while uploading the attachment:',
@@ -152,7 +152,7 @@ const Create: Command = {
                 });
 
                 await sendMessage('clip saved!', message.channel);
-            } catch (error) {
+            } catch (error: any) {
                 debug('Create', 'An error occured while saving a clip:', error);
                 await sendError(
                     'an error occured while saving your clip',

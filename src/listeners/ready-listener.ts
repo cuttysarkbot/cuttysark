@@ -8,7 +8,7 @@ export default async function ReadyListener(
 ): Promise<void> {
     if (config.activity) {
         client.user?.setPresence({
-            activity: config.activity,
+            activities: [config.activity],
             status: 'online',
         });
     }

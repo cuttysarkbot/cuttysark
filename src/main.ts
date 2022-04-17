@@ -1,12 +1,12 @@
 // Hi there! You look great today!
 import dotenv from 'dotenv';
 
-import Discord, { Guild } from 'discord.js';
+import Discord, { Intents } from 'discord.js';
 
 import config from './load-config';
 import StorageConnector from './storage/storage-connector';
 import ReadyListener from './listeners/ready-listener';
-import MessageListener from './listeners/message-listener';
+import MessageCreateListener from './listeners/message-create-listener';
 import GuildCreateListener from './listeners/guild-create-listener';
 import { debug } from './utils/generic-utils';
 
@@ -20,7 +20,19 @@ if (config.readDotEnv) {
 }
 
 // Initialize client
-const client = new Discord.Client();
+const client = new Discord.Client({
+    intents: 37377,
+    // intents: [
+    //     Intents.FLAGS.GUILDS,
+    //     Intents.FLAGS.GUILD_MESSAGES,
+    //     Intents.FLAGS.DIRECT_MESSAGES,
+    //     'MESSAGE_CONTENT',
+    // ],
+    // https://github.com/discordjs/discord.js/issues/5516
+    partials: [
+        'CHANNEL', // Required to receive DMs
+    ],
+});
 
 // Initialize Storage
 const mongoUrl = process.env[config.mongoUriEnvVar];
@@ -47,8 +59,8 @@ storageConnector
         client.on('ready', ReadyListener.bind(ReadyListener, client));
 
         client.on(
-            'message',
-            MessageListener.bind(MessageListener, storageConnector),
+            'messageCreate',
+            MessageCreateListener.bind(MessageCreateListener, storageConnector),
         );
 
         client.on(

@@ -1,8 +1,7 @@
 import chalk from 'chalk';
-import { Message } from 'discord.js';
+import { Message, Permissions } from 'discord.js';
 
 import config from '../load-config';
-import NamespaceSettings from '../structs/namespace-settings';
 
 export function genericLogger(
     type: 0 | 1,
@@ -95,7 +94,9 @@ export function hasElevatedPerms(message: Message, permRole: string): boolean {
     if (!message.member) return true;
 
     // Has manage server
-    if (message.member.hasPermission('MANAGE_GUILD')) return true;
+    if (message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
+        return true;
+    }
 
     // Doesn't have manage server and no role is set
     if (permRole.length === 0) return false;

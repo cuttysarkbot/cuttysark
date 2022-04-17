@@ -18,7 +18,7 @@ import Command from '../structs/command';
 import CommandOptions from '../structs/command-options';
 import ClipManifest from '../structs/clip-manifest';
 
-export default async function MessageListener(
+export default async function MessageCreateListener(
     storage: StorageConnector,
     message: Discord.Message,
 ): Promise<void> {
@@ -56,7 +56,7 @@ export default async function MessageListener(
             messageText === `<@${message.client.user?.id}>` ||
             messageText === `<@!${message.client.user?.id}>`
         ) {
-            debug('MessageListener', `Prefix requested`);
+            debug('MessageCreateListener', `Prefix requested`);
             await sendComplex(
                 {
                     title: `hi, i'm ${config.name}`,
@@ -81,7 +81,10 @@ use the \`help\` command for more information`,
         let command: Command | null = null;
 
         if (messageText.startsWith(personalPrefix)) {
-            debug('MessageListener', 'Personal prefixed message received');
+            debug(
+                'MessageCreateListener',
+                'Personal prefixed message received',
+            );
             const [commandName, possible] = getCommandNameAndArgs(
                 messageText,
                 personalPrefix,
@@ -98,7 +101,7 @@ use the \`help\` command for more information`,
             guildSettings &&
             messageText.startsWith(guildPrefix)
         ) {
-            debug('MessageListener', 'Guild prefixed message received');
+            debug('MessageCreateListener', 'Guild prefixed message received');
             const [commandName, possible] = getCommandNameAndArgs(
                 messageText,
                 guildPrefix,
@@ -115,7 +118,7 @@ use the \`help\` command for more information`,
         if (command) {
             try {
                 debug(
-                    'MessageListener',
+                    'MessageCreateListener',
                     'Command',
                     command.name,
                     'will be run',
@@ -142,7 +145,7 @@ you will need to change your personal prefix to use the server command.`,
                     message.channel,
                 );
                 error(
-                    'MessageListener',
+                    'MessageCreateListener',
                     `Uncaught error when running ${command.name}: ${err}`,
                 );
             }
@@ -200,7 +203,7 @@ you will need to change your personal prefix to use the server command.`,
         // If we have a clip, fetch attachments and send it
         if (clipManifest) {
             try {
-                debug('MessageListener', 'Clip found');
+                debug('MessageCreateListener', 'Clip found');
 
                 const messageObj = {
                     content: clipManifest.content,
@@ -220,7 +223,7 @@ you will need to change your personal prefix to use the server command.`,
                 if (shouldDelete) {
                     await message.delete();
                 }
-            } catch (err) {
+            } catch (err: any) {
                 await sendError(
                     'an error occured while fetching this clip',
                     message.channel,
@@ -228,7 +231,7 @@ you will need to change your personal prefix to use the server command.`,
                 error('Message Listener', 'Error fetching clip:', err);
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         error('Message Listener', 'Unknown error occurred:', err);
     }
 }

@@ -30,16 +30,14 @@ const Clear: Command = {
         );
 
         try {
-            await message.channel.awaitMessages(
-                (collMsg) =>
+            await message.channel.awaitMessages({
+                filter: (collMsg) =>
                     collMsg.author.id === message.author.id &&
                     collMsg.content === 'CONFIRMCLEAR',
-                {
-                    max: 1,
-                    time: 30000,
-                    errors: ['time'],
-                },
-            );
+                max: 1,
+                time: 30000,
+                errors: ['time'],
+            });
         } catch (err) {
             await sendMessage('clear process cancelled', message.channel);
             return;

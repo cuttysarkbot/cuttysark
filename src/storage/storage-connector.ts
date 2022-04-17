@@ -56,10 +56,7 @@ export default class StorageConnector {
     ): Promise<void> {
         debug('Storage', 'Initializing storage connector...');
         // Connect and log errors
-        await this.m.connect(mongoUrl, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await this.m.connect(mongoUrl);
         this._db = this.m.connection;
 
         this.db.on('error', error.bind(error, 'Storage'));

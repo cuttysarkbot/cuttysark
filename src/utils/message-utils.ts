@@ -1,12 +1,14 @@
 import { debug } from 'console';
-import Discord from 'discord.js';
+import Discord, { MessageEmbed, MessageEmbedOptions } from 'discord.js';
 
 import config from '../load-config';
 
 type DiscordTextChannel =
     | Discord.TextChannel
     | Discord.DMChannel
-    | Discord.NewsChannel;
+    | Discord.NewsChannel
+    | Discord.ThreadChannel
+    | Discord.PartialDMChannel;
 
 type EmbedField = {
     name: string;
@@ -31,7 +33,6 @@ type Embed = {
     title?: string;
     description?: string;
     url?: string;
-    timestamp?: number;
     color?: string;
     author?: EmbedAuthor;
     footer?: EmbedFooter;
@@ -92,7 +93,7 @@ export async function sendComplex(
 
     return await sendRawMessage(
         {
-            embed: newEmbed,
+            embeds: [new MessageEmbed(newEmbed as MessageEmbedOptions)],
         },
         channel,
     );

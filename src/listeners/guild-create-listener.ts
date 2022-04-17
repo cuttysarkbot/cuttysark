@@ -10,7 +10,7 @@ export default async function GuildCreateListener(
     debug('GuildCreate', 'Guild added');
     try {
         await storage.createNamespaceSettings(`guild${guild.id}`);
-    } catch (error) {
+    } catch (error: any) {
         error(
             'GuildCreateListener',
             `Error creating namespace settings: ${error}`,
